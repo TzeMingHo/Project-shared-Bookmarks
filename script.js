@@ -22,9 +22,15 @@ function populateUserSelect() {
   });
 }
 
+// listeners
 document.getElementById("user-select").addEventListener("change", (e) => {
   state.currentUser = e.target.value;
   // add fetching bookmarks function here
+});
+
+document.getElementById("add-new-bookmark").addEventListener("click", () => {
+  const currentUser = state.currentUser;
+  console.log(currentUser);
 });
 
 window.onload = function () {
