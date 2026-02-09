@@ -22,6 +22,22 @@ function populateUserSelect() {
   });
 }
 
+function createNewForm() {
+  const bookmarkForm = document.createElement("form");
+
+  const formHeader = document.createElement("h2");
+  formHeader.textContent = `New Bookmark for User ${state.currentUser}`;
+
+  const titleLabel = document.createElement("label");
+  titleLabel.textContent = "Title: ";
+
+  const titleInput = document.createElement("input");
+  titleInput.name = "bookmark-title";
+
+  bookmarkForm.append(formHeader, titleLabel, titleInput);
+  return bookmarkForm;
+}
+
 // listeners
 document.getElementById("user-select").addEventListener("change", (e) => {
   state.currentUser = e.target.value;
@@ -39,6 +55,6 @@ document.getElementById("add-new-bookmark").addEventListener("click", () => {
 
 window.onload = function () {
   populateUserSelect();
-  document.querySelector("main").innerText =
-    `There are ${state.users.length} users`;
+  const newForm = createNewForm();
+  document.querySelector("main").appendChild(newForm);
 };
