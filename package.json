@@ -4,8 +4,7 @@
   "description": "A webpage shares bookmarks saved by users",
   "main": "script.js",
   "scripts": {
-    "test": "jest",
-    "build": "mkdir -p dist && cp -R . dist/"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
