@@ -6,6 +6,7 @@
 // You can't open the index.html file using a file:// URL.
 
 // this obj jest for testing
+const allBookmark = [];
 const user1 = {
   title: "Code Your Future",
   url: "https://codeyourfuture.io/",
@@ -26,7 +27,7 @@ window.onload = function () {
 };
 
 
-function bookmarkCard({title,url,description,timestamp,likeCounter})
+function bookmarkCard({title,url,description,timestamp,likeCounter,userId})
 {
   const template = document.getElementById("bookmark-card-template");
   const card = template.content.cloneNode(true);
@@ -40,7 +41,29 @@ function bookmarkCard({title,url,description,timestamp,likeCounter})
   const timeElm = card.querySelector(".created-time");
   timeElm.textContent = date.toLocaleString("en-GB");  //English- Great Britain
   timeElm.dateTime = timestamp;
-  //still need to solve copy and like buttons 
+  
+  const article = card.querySelector(".bookmark-card");
+  article.dataset.bookmarkId = userId;
   
   return card;
+}
+
+const root = document.getElementById("root");
+root.addEventListener("click",handleBookmarkClick);
+
+function handleBookmarkClick(event){
+  const copyBtn = event.target.closest(".copy-btn");
+  if(!copyBtn) return;
+  let card =copyBtn.closest(".bookmark-card");
+  let  bookmarkId = Number(card.dataset.bookmarkId);
+  
+  // const bookmark = allBookmark.find(bk=>bk.userId ===bookmarkId)
+  //for now I have just one user so
+  const bookmark = user1;
+  navigator.clipboard.writeText(bookmark.url);
+  copyBtn.textContent = "Copied";
+  setTimeout(()=>(copyBtn.textContent = "copy"),1200);
+
+ 
+
 }
