@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
     <title>Shared-Bookmarks</title>
     <script type="module" src="script.js"></script>
   </head>
@@ -20,33 +21,34 @@
       <form id="bookmark-form">
         <h4 id="bookmark-header">New bookmark form</h4>
         <label for="bookmark-title">Title:</label>
-        <br />
+
         <input
           id="bookmark-title"
           name="bookmark-title"
           type="text"
           placeholder="title for the new bookmark"
         />
-        <br />
+
         <label for="bookmark-url">URL: </label>
-        <br />
+
         <input
           id="bookmark-url"
           name="bookmark-url"
           type="text"
           placeholder="url for the new bookmark"
         />
-        <br />
+
         <label for="bookmark-description">Description:</label>
-        <br />
+
         <textarea
           id="bookmark-description"
           name="bookmark-description"
           placeholder="Description for the new bookmark"
         ></textarea>
-        <br />
-        <button id="bookmark-submit" type="submit">Submit</button>
-        <button id="bookmark-clear" type="reset">Clear</button>
+        <div class="button-field">
+          <button id="bookmark-submit" type="submit">Submit</button>
+          <button id="bookmark-clear" type="reset">Clear</button>
+        </div>
       </form>
     </main>
   </body>
