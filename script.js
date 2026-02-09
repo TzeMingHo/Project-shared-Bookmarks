@@ -1,4 +1,3 @@
-
 // This is a placeholder file which shows how you can access functions defined in other files.
 // It can be loaded into index.html.
 // You can delete the contents of the file once you have understood how it works.
@@ -7,7 +6,22 @@
 
 import { getUserIds } from "./storage.js";
 
+const state = {
+  users: getUserIds(),
+};
+
+function populateUserSelect() {
+  const userSelect = document.getElementById("user-select");
+  state.users.forEach((user) => {
+    const userOption = document.createElement("option");
+    userOption.textContent = `User ${user}`;
+    userOption.value = user;
+    userSelect.appendChild(userOption);
+  });
+}
+
 window.onload = function () {
-  const users = getUserIds();
-  document.querySelector("body").innerText = `There are ${users.length} users`;
+  populateUserSelect();
+  document.querySelector("main").innerText =
+    `There are ${state.users.length} users`;
 };
