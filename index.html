@@ -1,13 +1,30 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shared-Bookmarks</title>
-   <script type="module" src="script.js"></script>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shared-Bookmarks</title>
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <main>
+      <div id="root"></div>
+    <template id="bookmark-card-template">
+      <article class="bookmark-card">
+        
+        <h2 class="bookmark-title">
+          <a class="bookmark-link" href=""></a>
+        </h2>
+
+        <p class="bookmark-description"></p>
+
+        <time datetime="" class="created-time"></time>
+
+        <button type="button" class="copy-btn">Copy</button>
+        <button type="button" class="like-btn"> ❤️ </button>
+
+      </article>
+    </template>
+    </main>
+  </body>
 </html>
