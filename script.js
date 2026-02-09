@@ -8,10 +8,12 @@ import { getUserIds } from "./storage.js";
 
 const state = {
   users: getUserIds(),
+  currentUser: "",
 };
 
 function populateUserSelect() {
   const userSelect = document.getElementById("user-select");
+
   state.users.forEach((user) => {
     const userOption = document.createElement("option");
     userOption.textContent = `User ${user}`;
@@ -19,6 +21,11 @@ function populateUserSelect() {
     userSelect.appendChild(userOption);
   });
 }
+
+document.getElementById("user-select").addEventListener("change", (e) => {
+  state.currentUser = e.target.value;
+  // add fetching bookmarks function here
+});
 
 window.onload = function () {
   populateUserSelect();
