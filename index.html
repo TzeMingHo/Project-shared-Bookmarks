@@ -25,49 +25,52 @@
       </div>
     </header>
     <main>
-      <div id="bookmark-display-area">
+      <section id="bookmark-display-area">
         <p>This is bookmark display area</p>
-      </div>
-      <form id="bookmark-form">
-        <h3 id="bookmark-header">New bookmark form</h3>
-        <label for="bookmark-title">Title:</label>
+      </section>
+      <aside>
+      </aside id=form-drawer>
+        <form id="bookmark-form">
+          <h3 id="bookmark-form-header" name="bookmark-form-header">New bookmark form</h3>
+          <label for="bookmark-title">Title:</label>
 
-        <input
-          id="bookmark-title"
-          name="bookmark-title"
-          type="text"
-          placeholder="title for the new bookmark"
-        />
+          <input
+            id="bookmark-title"
+            name="bookmark-title"
+            type="text"
+            placeholder="title for the new bookmark"
+          />
 
-        <label for="bookmark-url">URL: </label>
+          <label for="bookmark-url">URL: </label>
 
-        <input
-          id="bookmark-url"
-          name="bookmark-url"
-          type="text"
-          placeholder="url for the new bookmark"
-        />
+          <input
+            id="bookmark-url"
+            name="bookmark-url"
+            type="text"
+            placeholder="url for the new bookmark"
+          />
 
-        <label for="bookmark-description">Description:</label>
+          <label for="bookmark-description">Description:</label>
 
-        <textarea
-          id="bookmark-description"
-          name="bookmark-description"
-          placeholder="Description for the new bookmark"
-        ></textarea>
-        <div id="button-field">
-          <button
-            class="bookmark-form-button"
-            id="bookmark-submit"
-            type="submit"
-          >
-            Submit
-          </button>
-          <button class="bookmark-form-button" id="bookmark-clear" type="reset">
-            Clear
-          </button>
-        </div>
-      </form>
+          <textarea
+            id="bookmark-description"
+            name="bookmark-description"
+            placeholder="Description for the new bookmark"
+          ></textarea>
+          <div id="button-field">
+            <button
+              class="bookmark-form-button"
+              id="bookmark-submit"
+              type="submit"
+            >
+              Submit
+            </button>
+            <button class="bookmark-form-button" id="bookmark-clear" type="reset">
+              Clear
+            </button>
+          </div>
+        </form>
+      </aside>
     </main>
     <footer>Created @ Brian & Ahmad</footer>
   </body>
