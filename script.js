@@ -5,29 +5,51 @@
 // Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
 // You can't open the index.html file using a file:// URL.
 
-// this obj jest for testing
-const allBookmark = [];
-const user1 = {
-  title: "Code Your Future",
-  url: "https://codeyourfuture.io/",
-  description: "This is a test",
-  timestamp: "2026-02-07T10:30:00Z",
-  likeCounter: 0,
-  userId: 1,
-};
 
+
+
+// Ahmad 
+// Here I add three bookmarks for test and render the page without adding any feature
+// this obj is just  for testing
+
+const allBookmarks = [
+  {
+    title: "Code Your Future",
+    url: "https://codeyourfuture.io/",
+    description: "This is a test",
+    timestamp: "2026-02-07T10:30:00Z",
+    likeCounter: 0,
+    bookmarkId: 1,
+  },
+  {
+    title: "Type Club",
+    url: "https://www.typingclub.com/",
+    description: "This is to improve your typing speed.",
+    timestamp: "2026-02-08T10:30:00Z",
+    likeCounter: 0,
+    bookmarkId: 2,
+  },
+  {
+    title: "Spelling training",
+    url: "https://www.spellingtraining.com/index.html",
+    description: "This is  to improve your spelling",
+    timestamp: "2026-02-09T10:30:00Z",
+    likeCounter: 0,
+    bookmarkId: 3,
+  },
+];
 import { getUserIds } from "./storage.js";
 
 window.onload = function () {
   const users = getUserIds();
-  // document.querySelector("body").innerText = `There are ${users.length} users`;
-  const cardd = bookmarkCard(user1);
+
   const rootElm =document.getElementById("root");
-  rootElm.append(cardd);
+  const bookmarks = allBookmarks.map(bookmarkCard);
+  rootElm.append(...bookmarks);
 };
 
 
-function bookmarkCard({title,url,description,timestamp,likeCounter,userId})
+function bookmarkCard({title,url,description,timestamp,likeCounter,bookmarkId})
 {
   const template = document.getElementById("bookmark-card-template");
   const card = template.content.cloneNode(true);
@@ -35,6 +57,7 @@ function bookmarkCard({title,url,description,timestamp,likeCounter,userId})
   link.textContent = title;
   link.href = url;
   link.target= "_blank";
+  link.rel = "noopener noreferrer";
   card.querySelector(".bookmark-description").textContent = description;
 
   const date = new Date(timestamp);   // parses the timestamp then turns it into Date object 
@@ -43,27 +66,27 @@ function bookmarkCard({title,url,description,timestamp,likeCounter,userId})
   timeElm.dateTime = timestamp;
   
   const article = card.querySelector(".bookmark-card");
-  article.dataset.bookmarkId = userId;
+  article.dataset.bookmarkId = bookmarkId;
   
   return card;
 }
 
-const root = document.getElementById("root");
-root.addEventListener("click",handleBookmarkClick);
+// const root = document.getElementById("root");
+// root.addEventListener("click",handleBookmarkClick);
 
-function handleBookmarkClick(event){
-  const copyBtn = event.target.closest(".copy-btn");
-  if(!copyBtn) return;
-  let card =copyBtn.closest(".bookmark-card");
-  let  bookmarkId = Number(card.dataset.bookmarkId);
+// function handleBookmarkClick(event){
+//   const copyBtn = event.target.closest(".copy-btn");
+//   if(!copyBtn) return;
+//   let card =copyBtn.closest(".bookmark-card");
+//   let  bookmarkId = Number(card.dataset.bookmarkId);
   
-  // const bookmark = allBookmark.find(bk=>bk.userId ===bookmarkId)
-  //for now I have just one user so
-  const bookmark = user1;
-  navigator.clipboard.writeText(bookmark.url);
-  copyBtn.textContent = "Copied";
-  setTimeout(()=>(copyBtn.textContent = "copy"),1200);
+//   // const bookmark = allBookmark.find(bk=>bk.userId ===bookmarkId)
+//   //for now I have just one user so
+//   const bookmark = user1;
+//   navigator.clipboard.writeText(bookmark.url);
+//   copyBtn.textContent = "Copied";
+//   setTimeout(()=>(copyBtn.textContent = "copy"),1200);
 
  
 
-}
+// }
