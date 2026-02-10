@@ -117,14 +117,15 @@ function bookmarkCard({
 }
 
 async function handleBookmarkClick(event) {
-  const copyBtn = event.target.closest(".copy-btn");
-  if (!copyBtn) return;
-  const card = copyBtn.closest(".bookmark-card");
+ 
+  const card = event.target.closest(".bookmark-card");
   if (!card) return;
   const bmId = Number(card.dataset.bookmarkId);
 
   const bookmark = allBookmarks.find((bm) => bm.bookmarkId === bmId);
   if (!bookmark) return;
+   const copyBtn = event.target.closest(".copy-btn");
+   if (copyBtn) {
   try {
     await navigator.clipboard.writeText(bookmark.url);
     copyBtn.textContent = "Copied ✓";
@@ -132,4 +133,6 @@ async function handleBookmarkClick(event) {
   } catch {
     copyBtn.textContent = "Failed"; // here we need to ...
   }
+  return ;
+}
 }
