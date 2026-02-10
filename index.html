@@ -5,28 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shared-Bookmarks</title>
     <script type="module" src="script.js"></script>
+     <link href="style.css" rel="stylesheet" />
   </head>
   <body>
     <header>
       <h1>This is a header</h1>
     </header>
     <main>
-      <div id="root">
-        <template id="bookmark-card-template">
-          <article class="bookmark-card" data-bookmark-id="">
-            <h2 class="bookmark-title">
-              <a class="bookmark-link" href=""></a>
-            </h2>
+      <div id="root"></div>
+      <template id="bookmark-card-template">
+        <article class="bookmark-card" data-bookmark-id="">
+          <h2 class="bookmark-title">
+            <a class="bookmark-link" href=""></a>
+          </h2>
 
-            <p class="bookmark-description"></p>
+          <p class="bookmark-description"></p>
 
-            <time datetime="" class="created-time"></time>
+          <time datetime="" class="created-time"></time>
 
-            <button type="button" class="copy-btn">Copy</button>
-            <button type="button" class="like-btn">❤️</button>
-          </article>
-        </template>
-      </div>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="like-btn">❤️</button>
+        </article>
+      </template>
     </main>
   </body>
 </html>

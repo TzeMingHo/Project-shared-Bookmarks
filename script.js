@@ -42,7 +42,7 @@ window.onload = function () {
   const rootElm = document.getElementById("root");
   const bookmarks = allBookmarks.map(bookmarkCard);
   rootElm.append(...bookmarks);
-  root.addEventListener("click", handleBookmarkClick);
+  rootElm.addEventListener("click", handleBookmarkClick);
 };
 
 function bookmarkCard({
