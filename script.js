@@ -22,6 +22,10 @@ function populateUserSelect() {
   });
 }
 
+function renderNewForm() {
+  return bookmarkForm;
+}
+
 // listeners
 document.getElementById("user-select").addEventListener("change", (e) => {
   state.currentUser = e.target.value;
@@ -31,10 +35,12 @@ document.getElementById("user-select").addEventListener("change", (e) => {
 document.getElementById("add-new-bookmark").addEventListener("click", () => {
   const currentUser = state.currentUser;
   console.log(currentUser);
+  // add a form function
+  // render a form for the page
+  // save the data
+  // clear the form
 });
 
 window.onload = function () {
   populateUserSelect();
-  document.querySelector("main").innerText =
-    `There are ${state.users.length} users`;
 };
