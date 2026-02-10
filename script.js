@@ -65,7 +65,8 @@ function populateUserSelect() {
 //   return bookmarkForm;
 // }
 
-// listeners
+// listeners after you done these. Can you move them inside window.onload  
+
 document.getElementById("user-select").addEventListener("change", (e) => {
   state.currentUser = e.target.value;
   // add fetching bookmarks function here
@@ -124,6 +125,8 @@ async function handleBookmarkClick(event) {
 
   const bookmark = allBookmarks.find((bm) => bm.bookmarkId === bmId);
   if (!bookmark) return;
+
+
    const copyBtn = event.target.closest(".copy-btn");
    if (copyBtn) {
   try {
@@ -134,5 +137,11 @@ async function handleBookmarkClick(event) {
     copyBtn.textContent = "Failed"; // here we need to ...
   }
   return ;
+}
+const likeBtn = event.target.closest(".like-btn");
+if(likeBtn)
+{
+  bookmark.likeCounter+=1;
+  likeBtn.textContent = `❤️ ${bookmark.likeCounter}`;
 }
 }
