@@ -36,15 +36,13 @@ const allBookmarks = [
 ];
 import { getUserIds } from "./storage.js";
 
-<<<<<<< HEAD
-window.onload = function () {
-  const users = getUserIds();
-
-  const rootElm = document.getElementById("root");
+function displayingBookmarks() {
+  const displayArea = document.getElementById("bookmark-display-area");
   const bookmarks = allBookmarks.map(bookmarkCard);
-  rootElm.append(...bookmarks);
-  rootElm.addEventListener("click", handleBookmarkClick);
-=======
+  displayArea.append(...bookmarks);
+  displayArea.addEventListener("click", handleBookmarkClick);
+}
+
 const state = {
   users: getUserIds(),
   currentUser: "",
@@ -82,7 +80,7 @@ document.getElementById("add-new-bookmark").addEventListener("click", () => {
 
 window.onload = function () {
   populateUserSelect();
->>>>>>> main
+  displayingBookmarks();
 };
 
 function bookmarkCard({

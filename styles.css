@@ -11,10 +11,11 @@
 html,
 body {
   height: 100%;
+  font-family: system-ui, Arial, sans-serif;
 }
 
 header {
-  padding: 25px;
+  padding: 1rem;
   background-color: var(--header-color);
   display: flex;
   flex-direction: column;
@@ -71,9 +72,66 @@ main {
   height: 100%;
   background-color: aliceblue;
 }
-
+/* bookmark display */
 #bookmark-display-area {
   flex: 70%;
+}
+
+/* Bookmark card */
+.bookmark-card {
+  background: white;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.bookmark-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.bookmark-link {
+  text-decoration: none;
+  color: #0055cc;
+}
+
+.bookmark-link:hover {
+  text-decoration: underline;
+}
+
+.bookmark-description {
+  margin: 0.5rem 0;
+  color: #444;
+}
+
+.created-time {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.75rem;
+}
+
+/* Buttons */
+button {
+  font: inherit;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #f0f0f0;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #e6e6e6;
+}
+
+.copy-btn {
+  margin-right: 0.5rem;
+}
+
+.like-btn {
+  color: #c00;
 }
 
 /* bookmark-form */
@@ -107,6 +165,6 @@ footer {
   width: 100%;
   bottom: 0px;
   background-color: var(--header-color);
-  padding: 8px;
+  padding: 1rem;
   text-align: center;
 }
