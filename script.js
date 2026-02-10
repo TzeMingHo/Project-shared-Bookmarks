@@ -71,22 +71,24 @@ function bookmarkCard({title,url,description,timestamp,likeCounter,bookmarkId})
   return card;
 }
 
-// const root = document.getElementById("root");
-// root.addEventListener("click",handleBookmarkClick);
+const root = document.getElementById("root");
+root.addEventListener("click",handleBookmarkClick);
 
-// function handleBookmarkClick(event){
-//   const copyBtn = event.target.closest(".copy-btn");
-//   if(!copyBtn) return;
-//   let card =copyBtn.closest(".bookmark-card");
-//   let  bookmarkId = Number(card.dataset.bookmarkId);
+async function handleBookmarkClick(event){
+  const copyBtn = event.target.closest(".copy-btn");
+  if(!copyBtn) return;
+  const card =copyBtn.closest(".bookmark-card");
+  if(!card) return;
+  const bmId = Number(card.dataset.bookmarkId);
   
-//   // const bookmark = allBookmark.find(bk=>bk.userId ===bookmarkId)
-//   //for now I have just one user so
-//   const bookmark = user1;
-//   navigator.clipboard.writeText(bookmark.url);
-//   copyBtn.textContent = "Copied";
-//   setTimeout(()=>(copyBtn.textContent = "copy"),1200);
-
- 
-
-// }
+  const bookmark = allBookmarks.find(bm => bm.bookmarkId === bmId)
+  if(!bookmark) return;
+  try{
+    await navigator.clipboard.writeText(bookmark.url);
+  copyBtn.textContent = "Copied ✓";
+   setTimeout(()=>(copyBtn.textContent = "Copy"),1200);
+  } catch
+  {
+    copyBtn.textContent = "Failed" // here we need to ...
+  }
+ }
