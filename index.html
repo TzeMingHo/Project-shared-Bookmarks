@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
     <title>Shared-Bookmarks</title>
     <script type="module" src="script.js"></script>
      <link href="style.css" rel="stylesheet" />
@@ -28,5 +29,74 @@
         </article>
       </template>
     </main>
+=======
+    <link rel="stylesheet" href="styles.css" />
+    <title>Shared-Bookmarks</title>
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Shared Bookmarks</h1>
+      <div id="nav-bar">
+        <div id="user-select-field">
+          <select id="user-select">
+            <option id="default-option" value="">Select a user</option>
+          </select>
+        </div>
+        <div id="add-new-bookmark-field">
+          <label for="add-new-bookmark">Add new bookmark:</label>
+          <button id="add-new-bookmark" name="add-new-bookmark" type="button">
+            +
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div id="bookmark-display-area">
+        <p>This is bookmark display area</p>
+      </div>
+      <form id="bookmark-form">
+        <h3 id="bookmark-header">New bookmark form</h3>
+        <label for="bookmark-title">Title:</label>
+
+        <input
+          id="bookmark-title"
+          name="bookmark-title"
+          type="text"
+          placeholder="title for the new bookmark"
+        />
+
+        <label for="bookmark-url">URL: </label>
+
+        <input
+          id="bookmark-url"
+          name="bookmark-url"
+          type="text"
+          placeholder="url for the new bookmark"
+        />
+
+        <label for="bookmark-description">Description:</label>
+
+        <textarea
+          id="bookmark-description"
+          name="bookmark-description"
+          placeholder="Description for the new bookmark"
+        ></textarea>
+        <div id="button-field">
+          <button
+            class="bookmark-form-button"
+            id="bookmark-submit"
+            type="submit"
+          >
+            Submit
+          </button>
+          <button class="bookmark-form-button" id="bookmark-clear" type="reset">
+            Clear
+          </button>
+        </div>
+      </form>
+    </main>
+    <footer>Created @ Brian & Ahmad</footer>
+>>>>>>> main
   </body>
 </html>

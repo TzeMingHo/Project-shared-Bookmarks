@@ -1,0 +1,22 @@
+{
+  "name": "project-shared-bookmarks",
+  "version": "1.0.0",
+  "description": "A webpage shares bookmarks saved by users",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TzeMingHo/Project-shared-Bookmarks.git"
+  },
+  "author": "TzeMingHo and Ahmad Hmedan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TzeMingHo/Project-shared-Bookmarks/issues"
+  },
+  "homepage": "https://github.com/TzeMingHo/Project-shared-Bookmarks#readme",
+  "dependencies": {
+    "jest": "^30.2.0"
+  }
+}

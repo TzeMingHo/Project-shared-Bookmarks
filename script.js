@@ -36,6 +36,7 @@ const allBookmarks = [
 ];
 import { getUserIds } from "./storage.js";
 
+<<<<<<< HEAD
 window.onload = function () {
   const users = getUserIds();
 
@@ -43,6 +44,45 @@ window.onload = function () {
   const bookmarks = allBookmarks.map(bookmarkCard);
   rootElm.append(...bookmarks);
   rootElm.addEventListener("click", handleBookmarkClick);
+=======
+const state = {
+  users: getUserIds(),
+  currentUser: "",
+};
+
+function populateUserSelect() {
+  const userSelect = document.getElementById("user-select");
+
+  state.users.forEach((user) => {
+    const userOption = document.createElement("option");
+    userOption.textContent = `User ${user}`;
+    userOption.value = user;
+    userSelect.appendChild(userOption);
+  });
+}
+
+function renderNewForm() {
+  return bookmarkForm;
+}
+
+// listeners
+document.getElementById("user-select").addEventListener("change", (e) => {
+  state.currentUser = e.target.value;
+  // add fetching bookmarks function here
+});
+
+document.getElementById("add-new-bookmark").addEventListener("click", () => {
+  const currentUser = state.currentUser;
+  console.log(currentUser);
+  // add a form function
+  // render a form for the page
+  // save the data
+  // clear the form
+});
+
+window.onload = function () {
+  populateUserSelect();
+>>>>>>> main
 };
 
 function bookmarkCard({
