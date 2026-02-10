@@ -36,11 +36,13 @@ const allBookmarks = [
 ];
 import { getUserIds } from "./storage.js";
 
+
+
 function displayingBookmarks() {
-  const displayArea = document.getElementById("bookmark-display-area");
+   const displayArea = document.getElementById("bookmark-display-area");
+   displayArea.textContent = ""; // to clear the display before rendering
   const bookmarks = allBookmarks.map(bookmarkCard);
   displayArea.append(...bookmarks);
-  displayArea.addEventListener("click", handleBookmarkClick);
 }
 
 const state = {
@@ -59,11 +61,12 @@ function populateUserSelect() {
   });
 }
 
-function renderNewForm() {
-  return bookmarkForm;
-}
+// function renderNewForm() {
+//   return bookmarkForm;
+// }
 
-// listeners
+// listeners after you done these. Can you move them inside window.onload  
+
 document.getElementById("user-select").addEventListener("change", (e) => {
   state.currentUser = e.target.value;
   // add fetching bookmarks function here
@@ -79,6 +82,9 @@ document.getElementById("add-new-bookmark").addEventListener("click", () => {
 });
 
 window.onload = function () {
+  const displayArea = document.getElementById("bookmark-display-area");
+  displayArea.addEventListener("click", handleBookmarkClick);
+  
   populateUserSelect();
   displayingBookmarks();
 };
@@ -112,14 +118,17 @@ function bookmarkCard({
 }
 
 async function handleBookmarkClick(event) {
-  const copyBtn = event.target.closest(".copy-btn");
-  if (!copyBtn) return;
-  const card = copyBtn.closest(".bookmark-card");
+ 
+  const card = event.target.closest(".bookmark-card");
   if (!card) return;
   const bmId = Number(card.dataset.bookmarkId);
 
   const bookmark = allBookmarks.find((bm) => bm.bookmarkId === bmId);
   if (!bookmark) return;
+
+
+   const copyBtn = event.target.closest(".copy-btn");
+   if (copyBtn) {
   try {
     await navigator.clipboard.writeText(bookmark.url);
     copyBtn.textContent = "Copied ✓";
@@ -127,4 +136,12 @@ async function handleBookmarkClick(event) {
   } catch {
     copyBtn.textContent = "Failed"; // here we need to ...
   }
+  return ;
+}
+const likeBtn = event.target.closest(".like-btn");
+if(likeBtn)
+{
+  bookmark.likeCounter+=1;
+  likeBtn.textContent = `❤️ ${bookmark.likeCounter}`;
+}
 }
