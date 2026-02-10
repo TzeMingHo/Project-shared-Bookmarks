@@ -25,23 +25,22 @@
       </div>
     </header>
     <main>
-      <div id="bookmark-display-area">
-        <p>This is bookmark display area</p>
-        <template id="bookmark-card-template">
-          <article class="bookmark-card" data-bookmark-id="">
-            <h2 class="bookmark-title">
-              <a class="bookmark-link" href=""></a>
-            </h2>
+      <div id="bookmark-display-area"></div>
+      <template id="bookmark-card-template">
+        <article class="bookmark-card" data-bookmark-id="">
+          <h2 class="bookmark-title">
+            <a class="bookmark-link" href=""></a>
+          </h2>
 
-            <p class="bookmark-description"></p>
+          <p class="bookmark-description"></p>
 
-            <time datetime="" class="created-time"></time>
+          <time datetime="" class="created-time"></time>
 
-            <button type="button" class="copy-btn">Copy</button>
-            <button type="button" class="like-btn">❤️</button>
-          </article>
-        </template>
-      </div>
+          <button type="button" class="copy-btn">Copy</button>
+          <button type="button" class="like-btn">❤️</button>
+        </article>
+      </template>
+
       <form id="bookmark-form">
         <h3 id="bookmark-header">New bookmark form</h3>
         <label for="bookmark-title">Title:</label>
@@ -59,8 +58,8 @@
         <input
           id="bookmark-url"
           name="bookmark-url"
-          type="text"
-          placeholder="url for the new bookmark"
+          type="url"
+          placeholder="http://..."
           required
         />
 
@@ -87,6 +86,5 @@
       </form>
     </main>
     <footer>Created @ Brian & Ahmad</footer>
-    >>>>>>> main
   </body>
 </html>

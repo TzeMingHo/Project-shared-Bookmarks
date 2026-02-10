@@ -36,11 +36,13 @@ const allBookmarks = [
 ];
 import { getUserIds } from "./storage.js";
 
+
+
 function displayingBookmarks() {
-  const displayArea = document.getElementById("bookmark-display-area");
+   const displayArea = document.getElementById("bookmark-display-area");
+   displayArea.textContent = ""; // to clear the display before rendering
   const bookmarks = allBookmarks.map(bookmarkCard);
   displayArea.append(...bookmarks);
-  displayArea.addEventListener("click", handleBookmarkClick);
 }
 
 const state = {
@@ -59,9 +61,9 @@ function populateUserSelect() {
   });
 }
 
-function renderNewForm() {
-  return bookmarkForm;
-}
+// function renderNewForm() {
+//   return bookmarkForm;
+// }
 
 // listeners
 document.getElementById("user-select").addEventListener("change", (e) => {
@@ -79,6 +81,9 @@ document.getElementById("add-new-bookmark").addEventListener("click", () => {
 });
 
 window.onload = function () {
+  const displayArea = document.getElementById("bookmark-display-area");
+  displayArea.addEventListener("click", handleBookmarkClick);
+  
   populateUserSelect();
   displayingBookmarks();
 };
