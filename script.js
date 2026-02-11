@@ -8,36 +8,9 @@
 // Here I add three bookmarks for test and render the page without adding any feature
 // this obj is just  for testing
 
-// I will store those in user 2 for test
-// const allBookmarks = [
-//   {
-//     title: "Project Submission",
-//     url: "https://piscine.codeyourfuture.io/prep/#project-submission",
-//     description: "I will set this bookmark for user 2 as a test ",
-//     timestamp: "2026-02-11T10:30:00Z",
-//     likeCounter: 0,
-//     bookmarkId: 1,
-//   },
-//   {
-//     title: "Piscine",
-//     url: "https://piscine.codeyourfuture.io/",
-//     description: "This is the CYF piscine.",
-//     timestamp: "2026-02-09T10:29:00Z",
-//     likeCounter: 0,
-//     bookmarkId: 2,
-//   },
-//   {
-//     title: "Spelling training",
-//     url: "https://www.spellingtraining.com/index.html",
-//     description:
-//       "This bookmark for both user1 and user 2 but like button is sprate",
-//     timestamp: "2026-02-09T10:30:00Z",
-//     likeCounter: 0,
-//     bookmarkId: 3,
-//   },
-// ];
 
-import { getUserIds, getData, setData } from "./storage.js";
+
+import { getUserIds, getData, setData , clearData} from "./storage.js";
 
 const state = {
   users: getUserIds(),
@@ -137,7 +110,7 @@ async function handleBookmarkClick(event) {
   if (!state.currentUser) return;
   const card = event.target.closest(".bookmark-card");
   if (!card) return;
-  const bmId = Number(card.dataset.bookmarkId);
+  const bmId = card.dataset.bookmarkId;
 
   const bookmark = state.allBookmarks.find((bm) => bm.bookmarkId === bmId);
   if (!bookmark) return;
