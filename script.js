@@ -5,6 +5,7 @@
 // You can't open the index.html file using a file:// URL.
 
 import { getUserIds, setData, getData } from "./storage.js";
+import { v4 as uuidv4 } from "https://esm.sh/uuid";
 
 // Ahmad
 // Here I add three bookmarks for test and render the page without adding any feature
@@ -47,12 +48,10 @@ function displayingBookmarks() {
 const state = {
   users: getUserIds(),
   currentUser: "",
-  bookmark: {
+  bookmarkForm: {
     title: "",
     link: "",
     description: "",
-    timestamp: "",
-    likesCount: 0,
   },
 };
 
@@ -67,13 +66,7 @@ function populateUserSelect() {
   });
 }
 
-// add bookmark
-
-// function renderNewForm() {
-//   return bookmarkForm;
-// }
-
-// listeners after you done these. Can you move them inside window.onload
+// add From
 
 function userActivation(e) {
   state.currentUser = e.target.value;
@@ -98,18 +91,72 @@ function toggleFormDrawer() {
 }
 
 function bookmarkTitleHandler(e) {
-  state.bookmark.title = e.target.value;
-  console.log(state.bookmark.title);
+  state.bookmarkForm.title = e.target.value.trim();
+  console.log(state.bookmarkForm.title.length);
 }
 
 function bookmarkUrlHandler(e) {
-  state.bookmark.link = e.target.value;
-  console.log(state.bookmark.link);
+  state.bookmarkForm.link = e.target.value.trim();
+  console.log(state.bookmarkForm.link.length);
 }
 
 function bookmarkDescriptionHandler(e) {
-  state.bookmark.description = e.target.value;
-  console.log(state.bookmark.description);
+  state.bookmarkForm.description = e.target.value.trim();
+  console.log(state.bookmarkForm.description);
+}
+
+function windowConfirmMessage(currentUser, { title, link, description }) {
+  return window.confirm(`You are adding a bookmark for User ${currentUser}\n
+        Title: ${title}\n
+        URL: ${link}\n
+        Description: ${description}\n`);
+}
+
+function createBookmarkObject(bookmarkForm) {
+  bookmarkForm["timestamp"] = new Date().toString();
+  bookmarkForm["likeCounter"] = 0;
+  bookmarkForm["bookmarkId"] = uuidv4();
+  return bookmarkForm;
+}
+
+function bookmarkSubmitHandler(e, { currentUser, bookmarkForm }) {
+  e.preventDefault();
+  const { title, link, description } = bookmarkForm;
+  if (title === "" || link === "" || description === "") {
+    window.alert("Something is missing in the bookmark form");
+  } else {
+    if (windowConfirmMessage(currentUser, bookmarkForm)) {
+      const bookmarkObject = createBookmarkObject(bookmarkForm);
+      console.log(bookmarkObject);
+      //getting the logic of saving bookmark object
+      const userArray = getData(currentUser) || [];
+      console.log(userArray);
+    }
+  }
+}
+
+function addBookmarkFormListeners() {
+  const addBookmarkButton = document.getElementById("add-new-bookmark");
+  addBookmarkButton.addEventListener("click", toggleFormDrawer);
+
+  const bookmarkTitleInput = document.getElementById("bookmark-title");
+  bookmarkTitleInput.addEventListener("input", bookmarkTitleHandler);
+
+  const bookmarkUrlInput = document.getElementById("bookmark-url");
+  bookmarkUrlInput.addEventListener("input", bookmarkUrlHandler);
+
+  const bookmarkDescriptionInput = document.getElementById(
+    "bookmark-description",
+  );
+  bookmarkDescriptionInput.addEventListener(
+    "input",
+    bookmarkDescriptionHandler,
+  );
+
+  const bookmarkSubmitButton = document.getElementById("bookmark-submit");
+  bookmarkSubmitButton.addEventListener("click", (e) =>
+    bookmarkSubmitHandler(e, state),
+  );
 }
 
 window.onload = function () {
@@ -119,25 +166,9 @@ window.onload = function () {
   const userSelect = document.getElementById("user-select");
   userSelect.addEventListener("change", userActivation);
 
-  const addBookmarkButton = document.getElementById("add-new-bookmark");
-  addBookmarkButton.addEventListener("click", toggleFormDrawer);
-
-  const bookmarkTitleInput = this.document.getElementById("bookmark-title");
-  bookmarkTitleInput.addEventListener("input", bookmarkTitleHandler);
-
-  const bookmarkUrlInput = this.document.getElementById("bookmark-url");
-  bookmarkUrlInput.addEventListener("input", bookmarkUrlHandler);
-
-  const bookmarkDescriptionInput = this.document.getElementById(
-    "bookmark-description",
-  );
-  bookmarkDescriptionInput.addEventListener(
-    "input",
-    bookmarkDescriptionHandler,
-  );
-
   populateUserSelect();
   displayingBookmarks();
+  addBookmarkFormListeners();
 };
 
 function bookmarkCard({
