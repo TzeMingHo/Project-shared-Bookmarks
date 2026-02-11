@@ -113,7 +113,7 @@ function windowConfirmMessage(currentUser, { title, link, description }) {
 }
 
 function createBookmarkObject(bookmarkForm) {
-  bookmarkForm["timestamp"] = new Date().toString();
+  bookmarkForm["timestamp"] = new Date().toISOString();
   bookmarkForm["likeCounter"] = 0;
   bookmarkForm["bookmarkId"] = uuidv4();
   return bookmarkForm;
@@ -129,7 +129,7 @@ function bookmarkSubmitHandler(e, { currentUser, bookmarkForm }) {
       const bookmarkObject = createBookmarkObject(bookmarkForm);
       console.log(bookmarkObject);
       //getting the logic of saving bookmark object
-      const userArray = getData(currentUser) || [];
+      const userArray = getData(currentUser) ?? [];
       console.log(userArray);
     }
   }
