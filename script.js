@@ -36,12 +36,12 @@ const allBookmarks = [
 ];
 import { getUserIds } from "./storage.js";
 
-
-
 function displayingBookmarks() {
-   const displayArea = document.getElementById("bookmark-display-area");
-   displayArea.textContent = ""; // to clear the display before rendering
-   const sortedBookmarks = [...allBookmarks].sort((a,b)=> Date.parse(b.timestamp) - Date.parse(a.timestamp));
+  const displayArea = document.getElementById("bookmark-display-area");
+  displayArea.textContent = ""; // to clear the display before rendering
+  const sortedBookmarks = [...allBookmarks].sort(
+    (a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp),
+  );
   const bookmarks = sortedBookmarks.map(bookmarkCard);
   displayArea.append(...bookmarks);
 }
@@ -66,7 +66,7 @@ function populateUserSelect() {
 //   return bookmarkForm;
 // }
 
-// listeners after you done these. Can you move them inside window.onload  
+// listeners after you done these. Can you move them inside window.onload
 
 document.getElementById("user-select").addEventListener("change", (e) => {
   state.currentUser = e.target.value;
@@ -85,7 +85,7 @@ document.getElementById("add-new-bookmark").addEventListener("click", () => {
 window.onload = function () {
   const displayArea = document.getElementById("bookmark-display-area");
   displayArea.addEventListener("click", handleBookmarkClick);
-  
+
   populateUserSelect();
   displayingBookmarks();
 };
@@ -116,12 +116,11 @@ function bookmarkCard({
   article.dataset.bookmarkId = bookmarkId;
 
   const likeBtn = card.querySelector(".like-btn");
-  likeBtn.textContent = `❤️ ${likeCounter}`
+  likeBtn.textContent = `❤️ ${likeCounter}`;
   return card;
 }
 
 async function handleBookmarkClick(event) {
- 
   const card = event.target.closest(".bookmark-card");
   if (!card) return;
   const bmId = Number(card.dataset.bookmarkId);
@@ -129,23 +128,21 @@ async function handleBookmarkClick(event) {
   const bookmark = allBookmarks.find((bm) => bm.bookmarkId === bmId);
   if (!bookmark) return;
 
-
-   const copyBtn = event.target.closest(".copy-btn");
-   if (copyBtn) {
-  try {
-    await navigator.clipboard.writeText(bookmark.url);
-    copyBtn.textContent = "Copied ✓";
-    setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
-  } catch {
-    copyBtn.textContent = "Failed"; // here we need to ...
-    setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
+  const copyBtn = event.target.closest(".copy-btn");
+  if (copyBtn) {
+    try {
+      await navigator.clipboard.writeText(bookmark.url);
+      copyBtn.textContent = "Copied ✓";
+      setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
+    } catch {
+      copyBtn.textContent = "Failed"; // here we need to ...
+      setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
+    }
+    return;
   }
-  return;
-}
-const likeBtn = event.target.closest(".like-btn");
-if(likeBtn)
-{
-  bookmark.likeCounter+=1;
-  likeBtn.textContent = `❤️ ${bookmark.likeCounter}`;
-}
+  const likeBtn = event.target.closest(".like-btn");
+  if (likeBtn) {
+    bookmark.likeCounter += 1;
+    likeBtn.textContent = `❤️ ${bookmark.likeCounter}`;
+  }
 }
