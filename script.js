@@ -75,23 +75,33 @@ function populateUserSelect() {
 
 // listeners after you done these. Can you move them inside window.onload
 
-document.getElementById("user-select").addEventListener("change", (e) => {
+function userActivation(e) {
   state.currentUser = e.target.value;
+  const addBookmarkButton = document.getElementById("add-new-bookmark");
+  const formDrawer = document.getElementById("form-drawer");
+  const formHeader = document.getElementById("bookmark-form-header");
+  state.currentUser
+    ? ((addBookmarkButton.disabled = false),
+      (formHeader.textContent = `New bookmark form for User ${state.currentUser}`))
+    : ((addBookmarkButton.disabled = true),
+      formDrawer.classList.remove("active"));
   // add fetching bookmarks function here
-});
+}
 
-document.getElementById("add-new-bookmark").addEventListener("click", () => {
-  const currentUser = state.currentUser;
-  console.log(currentUser);
-  // add a form function
-  // render a form for the page
-  // save the data
-  // clear the form
-});
+function toggleFormDrawer() {
+  const formDrawer = document.getElementById("form-drawer");
+  formDrawer.classList.toggle("active");
+}
 
 window.onload = function () {
   const displayArea = document.getElementById("bookmark-display-area");
   displayArea.addEventListener("click", handleBookmarkClick);
+
+  const userSelect = document.getElementById("user-select");
+  userSelect.addEventListener("change", userActivation);
+
+  const addBookmarkButton = this.document.getElementById("add-new-bookmark");
+  addBookmarkButton.addEventListener("click", toggleFormDrawer);
 
   populateUserSelect();
   displayingBookmarks();

@@ -64,6 +64,10 @@ header {
   font-weight: bolder;
 }
 
+#add-new-bookmark:disabled {
+  background-color: gray;
+}
+
 /* main */
 
 main {
@@ -113,7 +117,7 @@ main {
 }
 
 /* Buttons */
-button {
+.bookmark-card button {
   font: inherit;
   padding: 0.4rem 0.7rem;
   border-radius: 4px;
@@ -122,7 +126,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.bookmark-card button:hover {
   background: #e6e6e6;
 }
 
@@ -135,6 +139,14 @@ button:hover {
 }
 
 /* bookmark-form */
+
+#form-drawer {
+  display: none;
+}
+
+#form-drawer.active {
+  display: block;
+}
 
 #bookmark-form {
   flex: 30%;
