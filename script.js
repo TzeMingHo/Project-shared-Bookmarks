@@ -21,7 +21,7 @@ const allBookmarks = [
     title: "Type Club",
     url: "https://www.typingclub.com/",
     description: "This is to improve your typing speed.",
-    timestamp: "2026-02-08T10:30:00Z",
+    timestamp: "2026-02-09T10:29:00Z",
     likeCounter: 0,
     bookmarkId: 2,
   },
@@ -41,7 +41,8 @@ import { getUserIds } from "./storage.js";
 function displayingBookmarks() {
    const displayArea = document.getElementById("bookmark-display-area");
    displayArea.textContent = ""; // to clear the display before rendering
-  const bookmarks = allBookmarks.map(bookmarkCard);
+   const sortByNewestFirst = [...allBookmarks].sort((a,b)=> Date.parse(b.timestamp) - Date.parse(a.timestamp));
+  const bookmarks = sortByNewestFirst.map(bookmarkCard);
   displayArea.append(...bookmarks);
 }
 
