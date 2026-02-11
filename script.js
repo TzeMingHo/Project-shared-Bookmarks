@@ -96,7 +96,6 @@ function toggleFormDrawer() {
 
 function bookmarkTitleHandler(e) {
   state.bookmarkForm.title = e.target.value.trim();
-  console.log(state.bookmarkForm.title.length);
 }
 
 function bookmarkUrlHandler(e) {
@@ -105,7 +104,6 @@ function bookmarkUrlHandler(e) {
 
 function bookmarkDescriptionHandler(e) {
   state.bookmarkForm.description = e.target.value.trim();
-  console.log(state.bookmarkForm.description);
 }
 
 function isValidURL(urlString) {
@@ -137,16 +135,26 @@ function bookmarkSubmitHandler(e, { currentUser, bookmarkForm }) {
   e.preventDefault();
   const bookmarkUrlInput = document.getElementById("bookmark-url");
   const { title, link, description } = bookmarkForm;
+  let userArray = getData(currentUser) ?? [];
+  const foundTitle = userArray.find((bookmark) => bookmark.title === title);
+  const foundLink = userArray.find((bookmark) => bookmark.link === link);
+
   if (title === "" || link === "" || description === "") {
     window.alert("Something is missing in the bookmark form");
   } else if (link && !isValidURL(link)) {
     bookmarkUrlInput.style.borderColor = "red";
-    window.alert("It doesn't seem like a valid url");
+    return window.alert("It doesn't seem like a valid url");
+  } else if (foundTitle && foundLink) {
+    return window.alert("You have saved both this title and this URL before");
+  } else if (foundTitle) {
+    return window.alert("You have saved this title before");
+  } else if (foundLink) {
+    return window.alert("You have saved this URL before");
   } else {
     bookmarkUrlInput.style.borderColor = "";
     if (windowConfirmMessage(currentUser, bookmarkForm)) {
       const bookmarkObject = createBookmarkObject(bookmarkForm);
-      let userArray = getData(currentUser) ?? [];
+
       userArray.unshift(bookmarkObject);
       setData(currentUser, userArray);
       const savedUserArray = getData(currentUser);
