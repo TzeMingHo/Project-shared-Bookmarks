@@ -68,14 +68,18 @@ function populateUserSelect() {
 
 // add From
 
+function clearFormInput() {
+  const formClear = document.getElementById("bookmark-clear");
+  formClear.click();
+}
+
 function userActivation(e) {
   state.currentUser = e.target.value;
   const addBookmarkButton = document.getElementById("add-new-bookmark");
   const formDrawer = document.getElementById("form-drawer");
   const formHeader = document.getElementById("bookmark-form-header");
 
-  const formClear = document.getElementById("bookmark-clear");
-  formClear.click();
+  clearFormInput();
 
   state.currentUser
     ? ((addBookmarkButton.disabled = false),
@@ -97,12 +101,22 @@ function bookmarkTitleHandler(e) {
 
 function bookmarkUrlHandler(e) {
   state.bookmarkForm.link = e.target.value.trim();
-  console.log(state.bookmarkForm.link.length);
 }
 
 function bookmarkDescriptionHandler(e) {
   state.bookmarkForm.description = e.target.value.trim();
   console.log(state.bookmarkForm.description);
+}
+
+function isValidURL(urlString) {
+  try {
+    const url = new URL(urlString);
+    console.log(url);
+    return url.protocol === "https:" || url.protocol === "http:";
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
 }
 
 function windowConfirmMessage(currentUser, { title, link, description }) {
@@ -121,16 +135,23 @@ function createBookmarkObject(bookmarkForm) {
 
 function bookmarkSubmitHandler(e, { currentUser, bookmarkForm }) {
   e.preventDefault();
+  const bookmarkUrlInput = document.getElementById("bookmark-url");
   const { title, link, description } = bookmarkForm;
   if (title === "" || link === "" || description === "") {
     window.alert("Something is missing in the bookmark form");
+  } else if (link && !isValidURL(link)) {
+    bookmarkUrlInput.style.borderColor = "red";
+    window.alert("It doesn't seem like a valid url");
   } else {
+    bookmarkUrlInput.style.borderColor = "";
     if (windowConfirmMessage(currentUser, bookmarkForm)) {
       const bookmarkObject = createBookmarkObject(bookmarkForm);
-      console.log(bookmarkObject);
-      //getting the logic of saving bookmark object
-      const userArray = getData(currentUser) ?? [];
-      console.log(userArray);
+      let userArray = getData(currentUser) ?? [];
+      userArray.unshift(bookmarkObject);
+      setData(currentUser, userArray);
+      const savedUserArray = getData(currentUser);
+      console.log(savedUserArray);
+      clearFormInput();
     }
   }
 }
