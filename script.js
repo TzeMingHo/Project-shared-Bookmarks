@@ -115,6 +115,8 @@ function bookmarkCard({
   const article = card.querySelector(".bookmark-card");
   article.dataset.bookmarkId = bookmarkId;
 
+  const likeBtn = card.querySelector(".like-btn");
+  likeBtn.textContent = `❤️ ${likeCounter}`
   return card;
 }
 
@@ -136,8 +138,9 @@ async function handleBookmarkClick(event) {
     setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
   } catch {
     copyBtn.textContent = "Failed"; // here we need to ...
+    setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
   }
-  return ;
+  return;
 }
 const likeBtn = event.target.closest(".like-btn");
 if(likeBtn)
