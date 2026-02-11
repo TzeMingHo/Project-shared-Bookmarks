@@ -80,6 +80,10 @@ function userActivation(e) {
   const addBookmarkButton = document.getElementById("add-new-bookmark");
   const formDrawer = document.getElementById("form-drawer");
   const formHeader = document.getElementById("bookmark-form-header");
+
+  const formClear = document.getElementById("bookmark-clear");
+  formClear.click();
+
   state.currentUser
     ? ((addBookmarkButton.disabled = false),
       (formHeader.textContent = `New bookmark form for User ${state.currentUser}`))
@@ -93,6 +97,21 @@ function toggleFormDrawer() {
   formDrawer.classList.toggle("active");
 }
 
+function bookmarkTitleHandler(e) {
+  state.bookmark.title = e.target.value;
+  console.log(state.bookmark.title);
+}
+
+function bookmarkUrlHandler(e) {
+  state.bookmark.link = e.target.value;
+  console.log(state.bookmark.link);
+}
+
+function bookmarkDescriptionHandler(e) {
+  state.bookmark.description = e.target.value;
+  console.log(state.bookmark.description);
+}
+
 window.onload = function () {
   const displayArea = document.getElementById("bookmark-display-area");
   displayArea.addEventListener("click", handleBookmarkClick);
@@ -100,8 +119,22 @@ window.onload = function () {
   const userSelect = document.getElementById("user-select");
   userSelect.addEventListener("change", userActivation);
 
-  const addBookmarkButton = this.document.getElementById("add-new-bookmark");
+  const addBookmarkButton = document.getElementById("add-new-bookmark");
   addBookmarkButton.addEventListener("click", toggleFormDrawer);
+
+  const bookmarkTitleInput = this.document.getElementById("bookmark-title");
+  bookmarkTitleInput.addEventListener("input", bookmarkTitleHandler);
+
+  const bookmarkUrlInput = this.document.getElementById("bookmark-url");
+  bookmarkUrlInput.addEventListener("input", bookmarkUrlHandler);
+
+  const bookmarkDescriptionInput = this.document.getElementById(
+    "bookmark-description",
+  );
+  bookmarkDescriptionInput.addEventListener(
+    "input",
+    bookmarkDescriptionHandler,
+  );
 
   populateUserSelect();
   displayingBookmarks();
