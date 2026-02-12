@@ -162,13 +162,13 @@ function bookmarkSubmitHandler(e, { currentUser, bookmarkFormValues }) {
   if (errorMessage) {
     return window.alert(errorMessage);
   }
+
   if (windowConfirmMessage(currentUser, bookmarkFormValues)) {
     const bookmarkObject = createBookmarkObject(bookmarkFormValues);
 
     userArray.unshift(bookmarkObject);
     setData(currentUser, userArray);
-    const savedUserArray = getData(currentUser);
-    console.log(savedUserArray);
+
     clearFormInput();
   }
 }
