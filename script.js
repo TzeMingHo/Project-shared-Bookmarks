@@ -48,7 +48,7 @@ function displayingBookmarks() {
 const state = {
   users: getUserIds(),
   currentUser: "",
-  bookmarkForm: {
+  bookmarkFormValues: {
     title: "",
     link: "",
     description: "",
@@ -95,15 +95,15 @@ function toggleFormDrawer() {
 }
 
 function bookmarkTitleHandler(e) {
-  state.bookmarkForm.title = e.target.value.trim();
+  state.bookmarkFormValues.title = e.target.value.trim();
 }
 
 function bookmarkUrlHandler(e) {
-  state.bookmarkForm.link = e.target.value.trim();
+  state.bookmarkFormValues.link = e.target.value.trim();
 }
 
 function bookmarkDescriptionHandler(e) {
-  state.bookmarkForm.description = e.target.value.trim();
+  state.bookmarkFormValues.description = e.target.value.trim();
 }
 
 function isValidURL(urlString) {
@@ -117,6 +117,30 @@ function isValidURL(urlString) {
   }
 }
 
+function validateBookmarkInputs(userArray, bookmarkFormValues) {
+  const { title, link, description } = bookmarkFormValues;
+
+  if (title === "" || link === "" || description === "") {
+    return "Something is missing in the bookmark form";
+  }
+
+  if (link && !isValidURL(link)) {
+    return "It doesn't seem like a valid url";
+  }
+
+  const foundTitle = userArray.find((bookmark) => bookmark.title === title);
+  const foundLink = userArray.find((bookmark) => bookmark.link === link);
+  if (foundTitle && foundLink) {
+    return "You have saved both this title and this URL before";
+  } else if (foundTitle) {
+    return "You have saved this title before";
+  } else if (foundLink) {
+    return "You have saved this URL before";
+  }
+
+  return null;
+}
+
 function windowConfirmMessage(currentUser, { title, link, description }) {
   return window.confirm(`You are adding a bookmark for User ${currentUser}\n
         Title: ${title}\n
@@ -124,43 +148,30 @@ function windowConfirmMessage(currentUser, { title, link, description }) {
         Description: ${description}\n`);
 }
 
-function createBookmarkObject(bookmarkForm) {
-  bookmarkForm["timestamp"] = new Date().toISOString();
-  bookmarkForm["likeCounter"] = 0;
-  bookmarkForm["bookmarkId"] = uuidv4();
-  return bookmarkForm;
+function createBookmarkObject(bookmarkFormValues) {
+  bookmarkFormValues["timestamp"] = new Date().toISOString();
+  bookmarkFormValues["likeCounter"] = 0;
+  bookmarkFormValues["bookmarkId"] = uuidv4();
+  return bookmarkFormValues;
 }
 
-function bookmarkSubmitHandler(e, { currentUser, bookmarkForm }) {
+function bookmarkSubmitHandler(e, { currentUser, bookmarkFormValues }) {
   e.preventDefault();
-  const bookmarkUrlInput = document.getElementById("bookmark-url");
-  const { title, link, description } = bookmarkForm;
+
   let userArray = getData(currentUser) ?? [];
-  const foundTitle = userArray.find((bookmark) => bookmark.title === title);
-  const foundLink = userArray.find((bookmark) => bookmark.link === link);
 
-  if (title === "" || link === "" || description === "") {
-    window.alert("Something is missing in the bookmark form");
-  } else if (link && !isValidURL(link)) {
-    bookmarkUrlInput.style.borderColor = "red";
-    return window.alert("It doesn't seem like a valid url");
-  } else if (foundTitle && foundLink) {
-    return window.alert("You have saved both this title and this URL before");
-  } else if (foundTitle) {
-    return window.alert("You have saved this title before");
-  } else if (foundLink) {
-    return window.alert("You have saved this URL before");
-  } else {
-    bookmarkUrlInput.style.borderColor = "";
-    if (windowConfirmMessage(currentUser, bookmarkForm)) {
-      const bookmarkObject = createBookmarkObject(bookmarkForm);
+  const errorMessage = validateBookmarkInputs(userArray, bookmarkFormValues);
+  if (errorMessage) {
+    return window.alert(errorMessage);
+  }
+  if (windowConfirmMessage(currentUser, bookmarkFormValues)) {
+    const bookmarkObject = createBookmarkObject(bookmarkFormValues);
 
-      userArray.unshift(bookmarkObject);
-      setData(currentUser, userArray);
-      const savedUserArray = getData(currentUser);
-      console.log(savedUserArray);
-      clearFormInput();
-    }
+    userArray.unshift(bookmarkObject);
+    setData(currentUser, userArray);
+    const savedUserArray = getData(currentUser);
+    console.log(savedUserArray);
+    clearFormInput();
   }
 }
 
