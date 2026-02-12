@@ -35,6 +35,10 @@ header {
   width: 50%;
 }
 
+#users-label {
+  font-weight: bolder;
+}
+
 #user-select {
   font-size: larger;
   border-radius: 5px;
@@ -62,6 +66,10 @@ header {
   border-radius: 50%;
   font-size: larger;
   font-weight: bolder;
+}
+
+#add-new-bookmark:focus {
+  outline: 3px solid orange;
 }
 
 #add-new-bookmark:disabled {
