@@ -1,5 +1,4 @@
 import { getUserIds, setData, getData } from "./storage.js";
-import { v4 as uuidv4 } from "https://esm.sh/uuid";
 
 const state = {
   users: getUserIds(),
@@ -130,7 +129,7 @@ function createBookmarkObject(bookmarkFormValues) {
     ...bookmarkFormValues,
     timestamp: new Date().toISOString(),
     likeCounter: 0,
-    bookmarkId: uuidv4(),
+    bookmarkId: crypto.randomUUID(),
   };
 }
 
@@ -181,17 +180,19 @@ function addBookmarkFormListeners() {
   );
 }
 
-window.onload = function () {
-  const displayArea = document.getElementById("bookmark-display-area");
-  displayArea.addEventListener("click", handleBookmarkClick);
+if (typeof window !== "undefined") {
+  window.onload = function () {
+    const displayArea = document.getElementById("bookmark-display-area");
+    displayArea.addEventListener("click", handleBookmarkClick);
 
-  const userSelect = document.getElementById("user-select");
-  userSelect.addEventListener("change", userActivation);
+    const userSelect = document.getElementById("user-select");
+    userSelect.addEventListener("change", userActivation);
 
-  populateUserSelect();
-  displayingBookmarks();
-  addBookmarkFormListeners();
-};
+    populateUserSelect();
+    displayingBookmarks();
+    addBookmarkFormListeners();
+  };
+}
 
 function bookmarkCard({
   title,

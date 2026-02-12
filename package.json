@@ -5,7 +5,7 @@
   "main": "script.js",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-network-imports script.test.js"
+    "test": "node script.test.js"
   },
   "repository": {
     "type": "git",
@@ -16,8 +16,5 @@
   "bugs": {
     "url": "https://github.com/TzeMingHo/Project-shared-Bookmarks/issues"
   },
-  "homepage": "https://github.com/TzeMingHo/Project-shared-Bookmarks#readme",
-  "dependencies": {
-    "uuid": "^13.0.0"
-  }
+  "homepage": "https://github.com/TzeMingHo/Project-shared-Bookmarks#readme"
 }
