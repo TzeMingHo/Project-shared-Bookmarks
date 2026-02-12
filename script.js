@@ -1,9 +1,3 @@
-// This is a placeholder file which shows how you can access functions defined in other files.
-// It can be loaded into index.html.
-// You can delete the contents of the file once you have understood how it works.
-// Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
-// You can't open the index.html file using a file:// URL.
-
 import { getUserIds, setData, getData, clearData } from "./storage.js";
 import { v4 as uuidv4 } from "https://esm.sh/uuid";
 
@@ -20,7 +14,7 @@ const state = {
 
 function displayingBookmarks() {
   const displayArea = document.getElementById("bookmark-display-area");
-  displayArea.textContent = ""; // to clear the display before rendering
+  displayArea.textContent = "";
   if (!state.currentUser) return;
   if (state.allBookmarks.length === 0) {
     displayArea.textContent = "Press + to add your first bookmark";
@@ -44,8 +38,6 @@ function populateUserSelect() {
   });
 }
 
-// add From
-
 function clearFormInput() {
   const formClear = document.getElementById("bookmark-clear");
   formClear.click();
@@ -64,7 +56,6 @@ function userActivation(e) {
       (formHeader.textContent = `New bookmark form for User ${state.currentUser}`))
     : ((addBookmarkButton.disabled = true),
       formDrawer.classList.remove("active"));
-  // add fetching bookmarks function here
 
   state.allBookmarks = getData(state.currentUser) ?? [];
   displayingBookmarks();
@@ -210,9 +201,9 @@ function bookmarkCard({
   link.rel = "noopener noreferrer";
   card.querySelector(".bookmark-description").textContent = description;
 
-  const date = new Date(timestamp); // parses the timestamp then turns it into Date object
+  const date = new Date(timestamp);
   const timeElm = card.querySelector(".created-time");
-  timeElm.textContent = date.toLocaleString("en-GB"); //English- Great Britain
+  timeElm.textContent = date.toLocaleString("en-GB");
   timeElm.dateTime = timestamp;
 
   const article = card.querySelector(".bookmark-card");
@@ -222,7 +213,7 @@ function bookmarkCard({
   likeBtn.textContent = `❤️ ${likeCounter}`;
 
   const copyBtn = card.querySelector(".copy-btn");
-  copyBtn.setAttribute("aria-label", `Copy link for ${title}`); //for the accessibility
+  copyBtn.setAttribute("aria-label", `Copy link for ${title}`);
   return card;
 }
 
@@ -243,7 +234,7 @@ async function handleBookmarkClick(event) {
       copyBtn.textContent = "Copied ✓";
       setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
     } catch {
-      copyBtn.textContent = "Failed"; // here we need to ...
+      copyBtn.textContent = "Failed";
 
       setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
     }
