@@ -15,7 +15,8 @@ If there are no bookmarks for the selected user, a message is displayed to expla
 // 2. clear the localstorage and see the bookmark page of any users to see the message.
 
 The list of bookmarks must be shown in reverse chronological order
-// Add a bookmark to a user, and verify the time of each bookmark of that user to confirm if the date is in reverse chronological order that the newer will be on top of the older.
+// 1. Add a bookmark to a user, and verify the time of each bookmark of that user to confirm if the date is in reverse chronological order that the newer will be on top of the older.
+// 2. Unit test in script.test.js
 
 Each bookmark has a title, description and created at timestamp displayed
 // Verified that every displaying bookmark card confirm the Title, Description, and a Human-readable Timestamp.
@@ -43,4 +44,4 @@ The website must score 100 for accessibility in Lighthouse
 // We will test this by making sure that "Snapshot" mode of Lighthouse gives 100% accessibility for any view we look at.
 
 Unit tests must be written for at least one non-trivial function
-// A unit test, please see ----
+// Unit tests in script.test.js
