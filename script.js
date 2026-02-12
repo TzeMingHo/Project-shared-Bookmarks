@@ -109,10 +109,8 @@ function bookmarkDescriptionHandler(e) {
 function isValidURL(urlString) {
   try {
     const url = new URL(urlString);
-    console.log(url);
     return url.protocol === "https:" || url.protocol === "http:";
   } catch (err) {
-    console.log(err);
     return false;
   }
 }
