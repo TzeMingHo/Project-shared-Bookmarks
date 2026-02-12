@@ -4,49 +4,12 @@
 // Note that when running locally, in order to open a web page which uses modules, you must serve the directory over HTTP e.g. with https://www.npmjs.com/package/http-server
 // You can't open the index.html file using a file:// URL.
 
-import { getUserIds, setData, getData } from "./storage.js";
+import { getUserIds, setData, getData, clearData } from "./storage.js";
 import { v4 as uuidv4 } from "https://esm.sh/uuid";
-
-// Ahmad
-// Here I add three bookmarks for test and render the page without adding any feature
-// this obj is just  for testing
-
-const allBookmarks = [
-  {
-    title: "Code Your Future",
-    url: "https://codeyourfuture.io/",
-    description: "This is a test",
-    timestamp: "2026-02-07T10:30:00Z",
-    likeCounter: 0,
-    bookmarkId: 1,
-  },
-  {
-    title: "Type Club",
-    url: "https://www.typingclub.com/",
-    description: "This is to improve your typing speed.",
-    timestamp: "2026-02-08T10:30:00Z",
-    likeCounter: 0,
-    bookmarkId: 2,
-  },
-  {
-    title: "Spelling training",
-    url: "https://www.spellingtraining.com/index.html",
-    description: "This is  to improve your spelling",
-    timestamp: "2026-02-09T10:30:00Z",
-    likeCounter: 0,
-    bookmarkId: 3,
-  },
-];
-
-function displayingBookmarks() {
-  const displayArea = document.getElementById("bookmark-display-area");
-  displayArea.textContent = ""; // to clear the display before rendering
-  const bookmarks = allBookmarks.map(bookmarkCard);
-  displayArea.append(...bookmarks);
-}
 
 const state = {
   users: getUserIds(),
+  allBookmarks: [],
   currentUser: "",
   bookmarkFormValues: {
     title: "",
@@ -54,6 +17,21 @@ const state = {
     description: "",
   },
 };
+
+function displayingBookmarks() {
+  const displayArea = document.getElementById("bookmark-display-area");
+  displayArea.textContent = ""; // to clear the display before rendering
+  if (!state.currentUser) return;
+  if (state.allBookmarks.length === 0) {
+    displayArea.textContent = "Press + to add your first bookmark";
+    return;
+  }
+  const sortedBookmarks = [...state.allBookmarks].sort(
+    (a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp),
+  );
+  const bookmarks = sortedBookmarks.map(bookmarkCard);
+  displayArea.append(...bookmarks);
+}
 
 function populateUserSelect() {
   const userSelect = document.getElementById("user-select");
@@ -87,6 +65,9 @@ function userActivation(e) {
     : ((addBookmarkButton.disabled = true),
       formDrawer.classList.remove("active"));
   // add fetching bookmarks function here
+
+  state.allBookmarks = getData(state.currentUser) ?? [];
+  displayingBookmarks();
 }
 
 function toggleFormDrawer() {
@@ -170,6 +151,9 @@ function bookmarkSubmitHandler(e, { currentUser, bookmarkFormValues }) {
     setData(currentUser, userArray);
 
     clearFormInput();
+
+    state.allBookmarks = getData(state.currentUser) ?? [];
+    displayingBookmarks();
   }
 }
 
@@ -234,15 +218,22 @@ function bookmarkCard({
   const article = card.querySelector(".bookmark-card");
   article.dataset.bookmarkId = bookmarkId;
 
+  const likeBtn = card.querySelector(".like-btn");
+  likeBtn.textContent = `❤️ ${likeCounter}`;
+
+  const copyBtn = card.querySelector(".copy-btn");
+  copyBtn.setAttribute("aria-label", `Copy link for ${title}`); //for the accessibility
   return card;
 }
 
 async function handleBookmarkClick(event) {
+  if (!state.currentUser) return;
+
   const card = event.target.closest(".bookmark-card");
   if (!card) return;
-  const bmId = Number(card.dataset.bookmarkId);
+  const bmId = card.dataset.bookmarkId;
 
-  const bookmark = allBookmarks.find((bm) => bm.bookmarkId === bmId);
+  const bookmark = state.allBookmarks.find((bm) => bm.bookmarkId === bmId);
   if (!bookmark) return;
 
   const copyBtn = event.target.closest(".copy-btn");
@@ -253,6 +244,8 @@ async function handleBookmarkClick(event) {
       setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
     } catch {
       copyBtn.textContent = "Failed"; // here we need to ...
+
+      setTimeout(() => (copyBtn.textContent = "Copy"), 1200);
     }
     return;
   }
@@ -260,5 +253,7 @@ async function handleBookmarkClick(event) {
   if (likeBtn) {
     bookmark.likeCounter += 1;
     likeBtn.textContent = `❤️ ${bookmark.likeCounter}`;
+
+    setData(state.currentUser, state.allBookmarks);
   }
 }
