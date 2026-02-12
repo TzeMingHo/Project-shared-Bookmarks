@@ -1,4 +1,4 @@
-import { getUserIds, setData, getData, clearData } from "./storage.js";
+import { getUserIds, setData, getData } from "./storage.js";
 import { v4 as uuidv4 } from "https://esm.sh/uuid";
 
 const state = {
@@ -7,7 +7,7 @@ const state = {
   currentUser: "",
   bookmarkFormValues: {
     title: "",
-    link: "",
+    url: "",
     description: "",
   },
 };
@@ -78,7 +78,7 @@ function bookmarkTitleHandler(e) {
 }
 
 function bookmarkUrlHandler(e) {
-  state.bookmarkFormValues.link = e.target.value.trim();
+  state.bookmarkFormValues.url = e.target.value.trim();
 }
 
 function bookmarkDescriptionHandler(e) {
@@ -95,18 +95,18 @@ function isValidURL(urlString) {
 }
 
 export function validateBookmarkInputs(userArray, bookmarkFormValues) {
-  const { title, link, description } = bookmarkFormValues;
+  const { title, url, description } = bookmarkFormValues;
 
-  if (title === "" || link === "" || description === "") {
+  if (title === "" || url === "" || description === "") {
     return "Something is missing in the bookmark form";
   }
 
-  if (link && !isValidURL(link)) {
+  if (url && !isValidURL(url)) {
     return "It doesn't seem like a valid url";
   }
 
   const foundTitle = userArray.find((bookmark) => bookmark.title === title);
-  const foundLink = userArray.find((bookmark) => bookmark.link === link);
+  const foundLink = userArray.find((bookmark) => bookmark.url === url);
   if (foundTitle && foundLink) {
     return "You have saved both this title and this URL before";
   } else if (foundTitle) {
@@ -118,18 +118,20 @@ export function validateBookmarkInputs(userArray, bookmarkFormValues) {
   return null;
 }
 
-function windowConfirmMessage(currentUser, { title, link, description }) {
+function windowConfirmMessage(currentUser, { title, url, description }) {
   return window.confirm(`You are adding a bookmark for User ${currentUser}\n
         Title: ${title}\n
-        URL: ${link}\n
+        URL: ${url}\n
         Description: ${description}\n`);
 }
 
 function createBookmarkObject(bookmarkFormValues) {
-  bookmarkFormValues["timestamp"] = new Date().toISOString();
-  bookmarkFormValues["likeCounter"] = 0;
-  bookmarkFormValues["bookmarkId"] = uuidv4();
-  return bookmarkFormValues;
+  return {
+    ...bookmarkFormValues,
+    timestamp: new Date().toISOString(),
+    likeCounter: 0,
+    bookmarkId: uuidv4(),
+  };
 }
 
 function bookmarkSubmitHandler(e, { currentUser, bookmarkFormValues }) {
@@ -201,11 +203,11 @@ function bookmarkCard({
 }) {
   const template = document.getElementById("bookmark-card-template");
   const card = template.content.cloneNode(true);
-  const link = card.querySelector(".bookmark-link");
-  link.textContent = title;
-  link.href = url;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
+  const urlAnchor = card.querySelector(".bookmark-url");
+  urlAnchor.textContent = title;
+  urlAnchor.href = url;
+  urlAnchor.target = "_blank";
+  urlAnchor.rel = "noopener noreferrer";
   card.querySelector(".bookmark-description").textContent = description;
 
   const date = new Date(timestamp);
@@ -220,7 +222,7 @@ function bookmarkCard({
   likeBtn.textContent = `❤️ ${likeCounter}`;
 
   const copyBtn = card.querySelector(".copy-btn");
-  copyBtn.setAttribute("aria-label", `Copy link for ${title}`);
+  copyBtn.setAttribute("aria-label", `Copy url for ${title}`);
   return card;
 }
 
