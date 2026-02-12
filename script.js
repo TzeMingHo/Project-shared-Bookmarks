@@ -12,17 +12,24 @@ const state = {
   },
 };
 
+export function sortingReverseChronologically(array) {
+  return array.sort(
+    (a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp),
+  );
+}
+
 function displayingBookmarks() {
   const displayArea = document.getElementById("bookmark-display-area");
   displayArea.textContent = "";
   if (!state.currentUser) return;
   if (state.allBookmarks.length === 0) {
-    displayArea.textContent = "Press + to add your first bookmark";
+    displayArea.textContent =
+      "No bookmarks found. Press + to add your first bookmark";
     return;
   }
-  const sortedBookmarks = [...state.allBookmarks].sort(
-    (a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp),
-  );
+  const sortedBookmarks = sortingReverseChronologically([
+    ...state.allBookmarks,
+  ]);
   const bookmarks = sortedBookmarks.map(bookmarkCard);
   displayArea.append(...bookmarks);
 }
@@ -87,7 +94,7 @@ function isValidURL(urlString) {
   }
 }
 
-function validateBookmarkInputs(userArray, bookmarkFormValues) {
+export function validateBookmarkInputs(userArray, bookmarkFormValues) {
   const { title, link, description } = bookmarkFormValues;
 
   if (title === "" || link === "" || description === "") {
