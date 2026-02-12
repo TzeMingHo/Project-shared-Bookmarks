@@ -8,48 +8,30 @@
 // Here I add three bookmarks for test and render the page without adding any feature
 // this obj is just  for testing
 
-const allBookmarks = [
-  {
-    title: "Code Your Future",
-    url: "https://codeyourfuture.io/",
-    description: "This is a test",
-    timestamp: "2026-02-07T10:30:00Z",
-    likeCounter: 0,
-    bookmarkId: 1,
-  },
-  {
-    title: "Type Club",
-    url: "https://www.typingclub.com/",
-    description: "This is to improve your typing speed.",
-    timestamp: "2026-02-09T10:29:00Z",
-    likeCounter: 0,
-    bookmarkId: 2,
-  },
-  {
-    title: "Spelling training",
-    url: "https://www.spellingtraining.com/index.html",
-    description: "This is  to improve your spelling",
-    timestamp: "2026-02-09T10:30:00Z",
-    likeCounter: 0,
-    bookmarkId: 3,
-  },
-];
-import { getUserIds } from "./storage.js";
+
+
+import { getUserIds, getData, setData , clearData} from "./storage.js";
+
+const state = {
+  users: getUserIds(),
+  allBookmarks: [],
+  currentUser: "",
+};
 
 function displayingBookmarks() {
   const displayArea = document.getElementById("bookmark-display-area");
   displayArea.textContent = ""; // to clear the display before rendering
-  const sortedBookmarks = [...allBookmarks].sort(
+  if (!state.currentUser) return;
+  if (state.allBookmarks.length === 0) {
+    displayArea.textContent = "Press + to add your first bookmark";
+    return;
+  }
+  const sortedBookmarks = [...state.allBookmarks].sort(
     (a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp),
   );
   const bookmarks = sortedBookmarks.map(bookmarkCard);
   displayArea.append(...bookmarks);
 }
-
-const state = {
-  users: getUserIds(),
-  currentUser: "",
-};
 
 function populateUserSelect() {
   const userSelect = document.getElementById("user-select");
@@ -68,19 +50,14 @@ function populateUserSelect() {
 
 // listeners after you done these. Can you move them inside window.onload
 
-document.getElementById("user-select").addEventListener("change", (e) => {
-  state.currentUser = e.target.value;
-  // add fetching bookmarks function here
-});
-
-document.getElementById("add-new-bookmark").addEventListener("click", () => {
-  const currentUser = state.currentUser;
-  console.log(currentUser);
-  // add a form function
-  // render a form for the page
-  // save the data
-  // clear the form
-});
+// document.getElementById("add-new-bookmark").addEventListener("click", () => {
+//   const currentUser = state.currentUser;
+//   console.log(currentUser);
+//   // add a form function
+//   // render a form for the page
+//   // save the data
+//   // clear the form
+// });
 
 window.onload = function () {
   const displayArea = document.getElementById("bookmark-display-area");
@@ -88,6 +65,12 @@ window.onload = function () {
 
   populateUserSelect();
   displayingBookmarks();
+  document.getElementById("user-select").addEventListener("change", (e) => {
+    state.currentUser = e.target.value;
+
+    state.allBookmarks = getData(state.currentUser) ?? [];
+    displayingBookmarks();
+  });
 };
 
 function bookmarkCard({
@@ -117,15 +100,19 @@ function bookmarkCard({
 
   const likeBtn = card.querySelector(".like-btn");
   likeBtn.textContent = `❤️ ${likeCounter}`;
+
+  const copyBtn = card.querySelector(".copy-btn");
+  copyBtn.setAttribute("aria-label", `Copy link for ${title}`); //for the accessibility
   return card;
 }
 
 async function handleBookmarkClick(event) {
+  if (!state.currentUser) return;
   const card = event.target.closest(".bookmark-card");
   if (!card) return;
-  const bmId = Number(card.dataset.bookmarkId);
+  const bmId = card.dataset.bookmarkId;
 
-  const bookmark = allBookmarks.find((bm) => bm.bookmarkId === bmId);
+  const bookmark = state.allBookmarks.find((bm) => bm.bookmarkId === bmId);
   if (!bookmark) return;
 
   const copyBtn = event.target.closest(".copy-btn");
@@ -144,5 +131,6 @@ async function handleBookmarkClick(event) {
   if (likeBtn) {
     bookmark.likeCounter += 1;
     likeBtn.textContent = `❤️ ${bookmark.likeCounter}`;
+    setData(state.currentUser, state.allBookmarks);
   }
 }
