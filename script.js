@@ -175,7 +175,7 @@ function addBookmarkFormListeners() {
   );
 
   const bookmarkSubmitButton = document.getElementById("bookmark-submit");
-  bookmarkSubmitButton.addEventListener("click", (e) =>
+  bookmarkSubmitButton.addEventListener("submit", (e) =>
     bookmarkSubmitHandler(e, state),
   );
 }
