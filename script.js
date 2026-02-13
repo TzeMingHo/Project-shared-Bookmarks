@@ -133,9 +133,7 @@ function createBookmarkObject(bookmarkFormValues) {
   };
 }
 
-function bookmarkSubmitHandler(e, { currentUser, bookmarkFormValues }) {
-  e.preventDefault();
-
+function bookmarkSubmitHandler({ currentUser, bookmarkFormValues }) {
   let userArray = getData(currentUser) ?? [];
 
   const errorMessage = validateBookmarkInputs(userArray, bookmarkFormValues);
@@ -177,7 +175,7 @@ function addBookmarkFormListeners() {
   const bookmarkForm = document.getElementById("bookmark-form");
   bookmarkForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    bookmarkSubmitHandler(e, state);
+    bookmarkSubmitHandler(state);
   });
 }
 
