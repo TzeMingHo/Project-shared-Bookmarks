@@ -42,8 +42,12 @@
 
           <time datetime="" class="created-time"></time>
 
-          <button type="button" class="copy-btn">Copy</button>
-          <button type="button" class="like-btn">❤️ 0</button>
+          <button type="button" class="copy-btn" name="copy-button">
+            Copy
+          </button>
+          <button type="button" class="like-btn" name="like-button">
+            ❤️ 0
+          </button>
         </article>
       </template>
       <section id="bookmark-display-area"></section>
@@ -84,6 +88,7 @@
               class="bookmark-form-button"
               id="bookmark-submit"
               type="submit"
+              name="submit-button"
             >
               Submit
             </button>
@@ -91,6 +96,7 @@
               class="bookmark-form-button"
               id="bookmark-clear"
               type="reset"
+              name="clear-button"
             >
               Clear
             </button>
