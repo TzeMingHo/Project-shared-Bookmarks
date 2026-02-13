@@ -45,7 +45,8 @@ The website must contain a form with inputs for a URL, a title, and a descriptio
 
 Submitting the form adds a new bookmark for the relevant user only
 
-- 1. Select User 1 and submit a new bookmark 2. Inspect the localstorage and double confirm a new bookmark is only added to the relevant user only
+- 1. Select User 1 and submit a new bookmark
+- 2. Inspect the localstorage and double confirm a new bookmark is only added to the relevant user only
 
 After creating a new bookmark, the list of bookmarks for the current user is shown, including the new bookmark
 
