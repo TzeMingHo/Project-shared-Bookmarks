@@ -174,10 +174,11 @@ function addBookmarkFormListeners() {
     bookmarkDescriptionHandler,
   );
 
-  const bookmarkSubmitButton = document.getElementById("bookmark-submit");
-  bookmarkSubmitButton.addEventListener("submit", (e) =>
-    bookmarkSubmitHandler(e, state),
-  );
+  const bookmarkForm = document.getElementById("bookmark-form");
+  bookmarkForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    bookmarkSubmitHandler(e, state);
+  });
 }
 
 if (typeof window !== "undefined") {
